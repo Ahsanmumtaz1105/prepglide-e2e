@@ -1,0 +1,36 @@
+{
+  "name": "prepglide-e2e",
+  "version": "1.0.0",
+  "description": "End-to-end testing framework using Playwright with TypeScript and Page Object Model",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "test:chromium": "npx playwright test --project=chromium",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:webkit": "npx playwright test --project=webkit",
+    "test:mobile": "npx playwright test --project='Mobile Chrome' --project='Mobile Safari'",
+    "codegen": "npx playwright codegen",
+    "report": "npx playwright show-report",
+    "trace": "npx playwright show-trace",
+    "lint": "npx tsc --noEmit",
+    "clean": "rimraf test-results playwright-report"
+  },
+  "keywords": [
+    "playwright",
+    "e2e",
+    "testing",
+    "typescript",
+    "automation",
+    "page-object-model"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.2",
+    "typescript": "^5.9.3"
+  }
+}
