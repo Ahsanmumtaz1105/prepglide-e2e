@@ -1,6 +1,17 @@
 # PrepGlide E2E Testing Framework
 
-End-to-end testing framework built with **Playwright** and **TypeScript** using the **Page Object Model (POM)** pattern.
+Comprehensive end-to-end testing framework for **PrepGlide** application built with **Playwright** and **TypeScript** using the **Page Object Model (POM)** pattern.
+
+## 🎯 Test Coverage
+
+This framework provides complete test coverage for PrepGlide's core user registration and onboarding workflows:
+
+- **Parent Registration Flow** (9 test scenarios)
+- **Child Account Creation** (8 test scenarios) 
+- **End-to-End User Journeys** (3 test scenarios)
+- **Navigation & UI Components** (3 test scenarios)
+
+**Total: 33 comprehensive test scenarios** covering all validation rules, error states, and user interactions.
 
 ## 🚀 Features
 
@@ -21,17 +32,48 @@ End-to-end testing framework built with **Playwright** and **TypeScript** using 
 ```
 prepglide-e2e/
 ├── fixtures/           # Test fixtures for dependency injection
-│   ├── pageFixtures.ts # Page object fixtures
+│   ├── pageFixtures.ts # Page object fixtures with all page objects
 │   └── index.ts
 ├── pages/              # Page Object Model classes
-│   ├── BasePage.ts     # Base page with common methods
-│   ├── HomePage.ts     # Home page object
-│   ├── LoginPage.ts    # Login page object
+│   ├── BasePage.ts               # Base page with common methods
+│   ├── HomePage.ts               # Home page object
+│   ├── LoginPage.ts              # Login page object
+│   ├── ParentRegistrationPage.ts # Parent registration page object
+│   ├── AddChildPage.ts           # Add child account page object
 │   └── index.ts
-├── tests/              # Test specifications
-│   ├── home.spec.ts    # Home page tests
-│   ├── login.spec.ts   # Login page tests
-│   └── example.spec.ts # Example/demo tests
+├── specs/              # Test plans and specifications
+│   └── parent-registration-add-child.plan.md # Comprehensive test plan
+├── tests/              # Test specifications organized by feature
+│   ├── parent-registration/      # Parent registration tests (9 tests)
+│   │   ├── successful-registration.spec.ts
+│   │   ├── empty-fields-validation.spec.ts
+│   │   ├── invalid-email-validation.spec.ts
+│   │   ├── password-too-short-validation.spec.ts
+│   │   ├── password-too-long-validation.spec.ts
+│   │   ├── password-mismatch-validation.spec.ts
+│   │   ├── incorrect-captcha-validation.spec.ts
+│   │   ├── password-visibility-toggle.spec.ts
+│   │   └── navigate-to-login.spec.ts
+│   ├── add-child/                # Child account creation tests (8 tests)
+│   │   ├── successful-child-creation.spec.ts
+│   │   ├── empty-name-validation.spec.ts
+│   │   ├── invalid-username-validation.spec.ts
+│   │   ├── valid-username-formats.spec.ts
+│   │   ├── password-too-short-validation.spec.ts
+│   │   ├── password-visibility-toggle.spec.ts
+│   │   ├── age-group-display.spec.ts
+│   │   └── trial-message-display.spec.ts
+│   ├── complete-flow/            # End-to-end workflow tests (3 tests)
+│   │   ├── e2e-parent-and-child-creation.spec.ts
+│   │   ├── parent-logout.spec.ts
+│   │   └── skip-child-creation.spec.ts
+│   ├── navigation/               # Navigation and UI tests (3 tests)
+│   │   ├── parent-menu-items.spec.ts
+│   │   ├── mobile-menu-toggle.spec.ts
+│   │   └── logo-navigation.spec.ts
+│   ├── home.spec.ts              # Home page tests
+│   ├── login.spec.ts             # Login page tests
+│   └── example.spec.ts           # Example/demo tests
 ├── utils/              # Utility functions
 │   ├── helpers.ts      # Test helpers and data generators
 │   └── index.ts
@@ -70,6 +112,25 @@ npx playwright install
 | `npm run report` | Open HTML test report |
 | `npm run trace` | Open trace viewer |
 
+### Run Specific Test Suites
+
+```bash
+# Run parent registration tests only
+npm test tests/parent-registration
+
+# Run add child tests only
+npm test tests/add-child
+
+# Run complete flow tests
+npm test tests/complete-flow
+
+# Run navigation tests
+npm test tests/navigation
+
+# Run a specific test file
+npm test tests/parent-registration/successful-registration.spec.ts
+```
+
 ## 🎭 Using Playwright Features
 
 ### Code Generator (Record Tests)
@@ -103,22 +164,48 @@ npm run report
 ```typescript
 import { test, expect } from '../fixtures/pageFixtures';
 
+// Parent Registration Test Example
+test('should register parent successfully', async ({ parentRegistrationPage, addChildPage }) => {
+  await parentRegistrationPage.goto();
+  await parentRegistrationPage.acceptCookies();
+  
+  const email = `testparent${Date.now()}@example.com`;
+  await parentRegistrationPage.register(email, 'Test@12345');
+  
+  // Verify redirect to add-child page
+  await expect(addChildPage.pageHeading).toBeVisible();
+});
+
+// Add Child Test Example
+test('should create child account', async ({ addChildPage }) => {
+  // Assume parent is already logged in
+  await addChildPage.goto();
+  await addChildPage.createChild('John Doe', 'johndoe123', 'Child@123');
+  
+  await expect(addChildPage.trialMessage).toBeVisible();
+});
+
+// Login Test Example
 test('should login successfully', async ({ loginPage }) => {
   await loginPage.goto();
   await loginPage.loginWithEmail('user@example.com', 'password');
-  // Add assertions
 });
 ```
 
-### Using Base Playwright
+### Available Page Objects
+
+- **`parentRegistrationPage`** - Parent/guardian registration functionality
+- **`addChildPage`** - Child account creation and management
+- **`loginPage`** - User authentication
+- **`homePage`** - Home page interactions
+
+### Test Data Management
 
 ```typescript
-import { test, expect } from '@playwright/test';
-
-test('should navigate to home', async ({ page }) => {
-  await page.goto('/');
-  await expect(page).toHaveTitle(/Home/);
-});
+// Generate unique test data to avoid conflicts
+const timestamp = Date.now();
+const email = `testuser${timestamp}@example.com`;
+const username = `testchild${timestamp}`;
 ```
 
 ## 🔧 Configuration
