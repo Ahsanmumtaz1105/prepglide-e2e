@@ -226,7 +226,46 @@ npm run report
 
 Reports are saved in the `playwright-report/` directory.
 
-## 🤝 Contributing
+## � Test Features & Validations
+
+### Parent Registration Tests
+- ✅ Email format validation
+- ✅ Password length constraints (6-15 characters)
+- ✅ Password confirmation matching
+- ✅ Math captcha solving (automated)
+- ✅ Form field validation
+- ✅ Password visibility toggles
+- ✅ Navigation flows
+
+### Child Account Tests  
+- ✅ Username format validation (letters, numbers, .-_ only)
+- ✅ Required field validation
+- ✅ Age group pre-population (10-11 years)
+- ✅ Password requirements
+- ✅ Trial message display
+- ✅ Form state management
+
+### End-to-End Flows
+- ✅ Complete registration → child creation workflow
+- ✅ Session management and logout
+- ✅ Alternative user paths (skip child creation)
+- ✅ Cross-page navigation
+
+### UI & Navigation
+- ✅ Parent menu accessibility
+- ✅ Mobile responsive design
+- ✅ Logo functionality
+- ✅ Cross-browser compatibility
+
+## 🛡️ Test Reliability Features
+
+- **Auto-healing locators** - Tests adapt to UI changes using multiple selector strategies
+- **Smart waiting** - Built-in waits for dynamic content and network requests
+- **Data isolation** - Unique test data generation to prevent test conflicts
+- **Error recovery** - Graceful handling of application state changes
+- **Cross-browser testing** - Consistent behavior across Chromium, Firefox, and WebKit
+
+## �🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)

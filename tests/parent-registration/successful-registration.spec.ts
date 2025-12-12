@@ -1,8 +1,8 @@
-import { test, expect } from '../../fixtures/pageFixtures';
+import { test, expect, type PageFixtures } from '../../fixtures/pageFixtures';
 import { TestDataGenerator } from '../../utils/helpers';
 
 test.describe('Parent Registration - Successful Registration', () => {
-  test('should successfully register parent with valid credentials', async ({ parentRegistrationPage, addChildPage }) => {
+  test('should successfully register parent with valid credentials', async ({ parentRegistrationPage, addChildPage }: PageFixtures) => {
     // Navigate to registration page
     await parentRegistrationPage.goto();
     

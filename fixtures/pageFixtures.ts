@@ -15,13 +15,13 @@ import { AddChildPage } from '../pages/AddChildPage';
  * - Better test maintainability
  */
 
-// Define the types for our fixtures
-type PageFixtures = {
+// Define and export the types for our fixtures
+export interface PageFixtures {
   homePage: HomePage;
   loginPage: LoginPage;
   parentRegistrationPage: ParentRegistrationPage;
   addChildPage: AddChildPage;
-};
+}
 
 // Extend base test with page objects
 export const test = base.extend<PageFixtures>({
